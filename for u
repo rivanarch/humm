@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Galaxy For You 🌌</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Cormorant Garamond',serif;
+overflow-x:hidden;
+background:
+radial-gradient(circle at top,
+#07111f 0%,
+#050b16 35%,
+#02050d 70%,
+#000 100%);
+color:white;
+}
+
+/* FLASH */
+
+.flash{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:white;
+z-index:9999;
+opacity:0;
+pointer-events:none;
+transition:.8s;
+}
+
+.flash.show{
+opacity:1;
+}
+
+/* STARS */
+
+.stars{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+overflow:hidden;
+pointer-events:none;
+z-index:0;
+}
+
+.star{
+position:absolute;
+background:white;
+border-radius:50%;
+opacity:.8;
+animation:moveStars linear infinite;
+}
+
+@keyframes moveStars{
+
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+20%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+
+}
+
+/* HERO */
+
+.hero{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:50;
+background:
+radial-gradient(circle at top,
+#07111f 0%,
+#050b16 35%,
+#02050d 70%,
+#000 100%);
+}
+
+/* MAIN */
+
+.main-content{
+opacity:0;
+pointer-events:none;
+transition:1.5s;
+position:relative;
+z-index:2;
+}
+
+.main-content.show{
+opacity:1;
+pointer-events:auto;
+}
+
+/* GIFT */
+
+.gift-container{
+position:relative;
+cursor:pointer;
+}
+
+.gift-box{
+position:relative;
+width:220px;
+height:220px;
+margin:auto;
+}
+
+.gift-body{
+position:absolute;
+bottom:0;
+width:220px;
+height:150px;
+background:linear-gradient(45deg,#2563eb,#60a5fa);
+border-radius:0 0 25px 25px;
+box-shadow:0 0 60px rgba(96,165,250,.5);
+}
+
+.gift-body::before{
+content:"";
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+width:35px;
+height:150px;
+background:white;
+}
+
+.gift-lid{
+position:absolute;
+top:20px;
+left:-10px;
+width:240px;
+height:60px;
+background:linear-gradient(45deg,#1d4ed8,#60a5fa);
+border-radius:20px;
+z-index:5;
+transition:1s;
+transform-origin:left bottom;
+box-shadow:0 0 40px rgba(96,165,250,.5);
+}
+
+.gift-lid::before{
+content:"";
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+width:35px;
+height:60px;
+background:white;
+}
+
+.gift-box.open .gift-lid{
+transform:
+rotate(-35deg)
+translateY(-50px)
+translateX(-30px);
+}
+
+.gift-text{
+margin-top:30px;
+letter-spacing:6px;
+font-size:15px;
+opacity:.7;
+text-align:center;
+}
+
+/* PARTICLES */
+
+.particles{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:700px;
+height:700px;
+pointer-events:none;
+}
+
+.particle{
+position:absolute;
+font-size:28px;
+animation:explode 2.5s forwards;
+opacity:0;
+}
+
+@keyframes explode{
+
+0%{
+transform:
+translate(0,0)
+scale(.5);
+opacity:0;
+}
+
+20%{
+opacity:1;
+}
+
+100%{
+transform:
+translate(var(--x),var(--y))
+scale(1.5);
+opacity:0;
+}
+
+}
+
+/* HERO DESKTOP */
+
+.hero-desktop{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:150px;
+padding:120px;
+width:100%;
+max-width:1800px;
+margin:auto;
+}
+
+.left{
+width:50%;
+}
+
+.right{
+width:50%;
+display:flex;
+justify-content:center;
+}
+
+.right img{
+width:100%;
+max-width:550px;
+height:750px;
+object-fit:cover;
+border-radius:35px;
+box-shadow:
+0 0 40px rgba(255,255,255,.08),
+0 0 100px rgba(79,140,255,.15);
+}
+
+/* TEXT */
+
+.small{
+font-family:'Pinyon Script',cursive;
+font-size:45px;
+color:#7aa8ff;
+margin-bottom:10px;
+}
+
+.big-title{
+font-size:120px;
+line-height:1;
+margin-bottom:25px;
+}
+
+.big-title span{
+color:#6fa8ff;
+font-style:italic;
+}
+
+.desc{
+font-size:30px;
+line-height:1.9;
+opacity:.85;
+max-width:850px;
+}
+
+/* BUTTON */
+
+.hero-btn{
+margin-top:40px;
+padding:20px 50px;
+border:none;
+border-radius:60px;
+background:linear-gradient(45deg,#224f95,#4f8cff);
+color:white;
+font-size:22px;
+cursor:pointer;
+transition:.4s;
+box-shadow:0 0 30px rgba(79,140,255,.4);
+}
+
+.hero-btn:hover{
+transform:translateY(-5px);
+}
+
+/* SECTION */
+
+section{
+padding:160px 140px;
+position:relative;
+z-index:2;
+}
+
+.glass{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(15px);
+border-radius:40px;
+padding:90px;
+}
+
+/* PLANETS */
+
+.planet-row{
+display:flex;
+justify-content:center;
+gap:50px;
+flex-wrap:wrap;
+margin-top:60px;
+}
+
+.planet-box{
+text-align:center;
+}
+
+.planet{
+font-size:90px;
+}
+
+.planet-text{
+margin-top:15px;
+font-size:20px;
+opacity:.8;
+}
+
+/* GALLERY */
+
+.gallery-title{
+text-align:center;
+margin-bottom:80px;
+}
+
+.gallery{
+display:grid;
+grid-template-columns:
+repeat(2,1fr);
+gap:50px;
+}
+
+.photo-box{
+text-align:center;
+}
+
+.photo-box img{
+width:100%;
+height:600px;
+object-fit:cover;
+border-radius:30px;
+}
+
+.photo-text{
+margin-top:18px;
+font-size:20px;
+opacity:.8;
+}
+
+/* FINAL */
+
+.final{
+text-align:center;
+}
+
+.final-heart{
+font-size:120px;
+margin-bottom:20px;
+}
+
+.final-text{
+font-size:30px;
+line-height:2;
+max-width:1000px;
+margin:auto;
+opacity:.9;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- FLASH -->
+
+<div class="flash" id="flash"></div>
+
+<!-- STARS -->
+
+<div class="stars" id="stars"></div>
+
+<!-- HERO -->
+
+<div class="hero">
+
+<div class="gift-container"
+onclick="openGift()">
+
+<div class="gift-box">
+
+<div class="gift-lid"></div>
+
+<div class="gift-body"></div>
+
+</div>
+
+<div class="particles"
+id="particles"></div>
+
+<div class="gift-text">
+OPEN YOUR GIFT ✨
+</div>
+
+</div>
+
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div class="main-content"
+id="mainContent">
+
+<!-- HERO SECTION -->
+
+<div class="hero-desktop">
+
+<div class="left">
+
+<div class="small">
+written among the stars 🌌
+</div>
+
+<div class="big-title">
+For You,<br>
+<span>My Universe</span>
+</div>
+
+<div class="desc">
+Among billions of stars,
+I still found you.
+And somehow,
+you became the most beautiful
+part of my universe.
+</div>
+
+<button class="hero-btn"
+onclick="document.getElementById('message')
+.scrollIntoView({
+behavior:'smooth'
+})">
+
+Enter Our Galaxy 🌌
+
+</button>
+
+</div>
+
+<div class="right">
+
+<img src="img/foto1.jpg">
+
+</div>
+
+</div>
+
+<!-- MESSAGE -->
+
+<section id="message">
+
+<div class="glass">
+
+<div class="small">
+from my heart 💙
+</div>
+
+<div class="big-title">
+You are my <span>favorite star</span>
+</div>
+
+<div class="desc">
+Every little thing about you
+feels magical.
+Like stargazing at 2 AM —
+quiet,
+beautiful,
+and impossible to forget.
+</div>
+
+</div>
+
+</section>
+
+<!-- PLANETS -->
+
+<section>
+
+<div class="gallery-title">
+
+<div class="small">
+our galaxy
+</div>
+
+<div class="big-title">
+Lost In <span>The Cosmos</span>
+</div>
+
+</div>
+
+<div class="planet-row">
+
+<div class="planet-box">
+<div class="planet">🌍</div>
+<div class="planet-text">
+our little world
+</div>
+</div>
+
+<div class="planet-box">
+<div class="planet">🪐</div>
+<div class="planet-text">
+endless memories
+</div>
+</div>
+
+<div class="planet-box">
+<div class="planet">☄️</div>
+<div class="planet-text">
+falling for you
+</div>
+</div>
+
+<div class="planet-box">
+<div class="planet">🌙</div>
+<div class="planet-text">
+late night talks
+</div>
+</div>
+
+<div class="planet-box">
+<div class="planet">⭐</div>
+<div class="planet-text">
+you are my star
+</div>
+</div>
+
+<div class="planet-box">
+<div class="planet">✨</div>
+<div class="planet-text">
+little magic moments
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- GALLERY -->
+
+<section>
+
+<div class="gallery-title">
+
+<div class="small">
+our memories
+</div>
+
+<div class="big-title">
+Captured <span>Moments</span>
+</div>
+
+</div>
+
+<div class="gallery">
+
+<div class="photo-box">
+<img src="img/foto1.jpg">
+<div class="photo-text">
+the first smile i loved 💙
+</div>
+</div>
+
+<div class="photo-box">
+<img src="img/foto2.jpg">
+<div class="photo-text">
+our happiest moment ✨
+</div>
+</div>
+
+<div class="photo-box">
+<img src="img/foto3.jpg">
+<div class="photo-text">
+my favorite person 🌌
+</div>
+</div>
+
+<div class="photo-box">
+<img src="img/foto4.jpg">
+<div class="photo-text">
+forever with you 💫
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- FINAL -->
+
+<section class="final">
+
+<div class="final-heart">
+💙
+</div>
+
+<div class="big-title">
+You Are My<br>
+<span>Favorite Universe</span>
+</div>
+
+<div class="final-text">
+And if the stars disappear one day,
+I would still search for you
+through every darkness in this universe.
+Because loving you
+feels like finding light
+in the middle of space.
+🌌
+</div>
+
+</section>
+
+</div>
+
+<!-- MUSIC -->
+
+<audio id="bgMusic" loop>
+
+<source src="music/lagu.mp3" type="audio/mp3">
+
+</audio>
+
+<script>
+
+/* OPEN GIFT */
+
+function openGift(){
+
+if(document.querySelector('.gift-box')
+.classList.contains('open')) return;
+
+document.querySelector('.gift-box')
+.classList.add('open');
+
+/* PLAY MUSIC */
+
+const music =
+document.getElementById('bgMusic');
+
+music.volume = 1;
+
+music.play()
+.then(()=>{
+
+console.log('music playing');
+
+})
+.catch((err)=>{
+
+console.log(err);
+
+});
+
+const particles =
+document.getElementById('particles');
+
+const icons = [
+'💙','💜','🤍','💖',
+'✨','⭐','🌟'
+];
+
+/* PARTICLES */
+
+for(let i=0;i<65;i++){
+
+const particle =
+document.createElement('div');
+
+particle.classList.add('particle');
+
+particle.innerHTML =
+icons[Math.floor(Math.random()*icons.length)];
+
+particle.style.left = '50%';
+particle.style.top = '50%';
+
+particle.style.setProperty(
+'--x',
+(Math.random()*900-450)+'px'
+);
+
+particle.style.setProperty(
+'--y',
+(Math.random()*-700)+'px'
+);
+
+particle.style.animationDelay =
+(Math.random()*0.4)+'s';
+
+particle.style.fontSize =
+(Math.random()*35+15)+'px';
+
+particles.appendChild(particle);
+
+}
+
+/* FLASH */
+
+setTimeout(()=>{
+
+document.getElementById('flash')
+.classList.add('show');
+
+},1200);
+
+/* HIDE FLASH */
+
+setTimeout(()=>{
+
+document.getElementById('flash')
+.classList.remove('show');
+
+},2600);
+
+/* SHOW WEBSITE */
+
+setTimeout(()=>{
+
+document.querySelector('.hero')
+.style.display='none';
+
+document.getElementById('mainContent')
+.classList.add('show');
+
+document.body.style.overflowY='auto';
+
+window.scrollTo({
+top:0,
+behavior:'smooth'
+});
+
+},2800);
+
+}
+
+/* STARS */
+
+const stars =
+document.getElementById('stars');
+
+for(let i=0;i<200;i++){
+
+const star =
+document.createElement('div');
+
+star.classList.add('star');
+
+let size = Math.random()*3;
+
+star.style.width = size+'px';
+star.style.height = size+'px';
+
+star.style.left =
+Math.random()*100+'vw';
+
+star.style.animationDuration =
+(Math.random()*20+10)+'s';
+
+star.style.animationDelay =
+Math.random()*10+'s';
+
+stars.appendChild(star);
+
+}
+
+/* LOCK SCROLL */
+
+document.body.style.overflow='hidden';
+
+</script>
+
+</body>
+</html>
